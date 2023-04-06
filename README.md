@@ -24,7 +24,7 @@ Resin is a web application built using React that allows users to create and sto
 
 ## Getting Started
 
-To get started with Resin, simply go to https://example.com and create an account. Once you're logged in, you can begin creating and saving projects right away.
+To get started with Resin, simply go to resign-website.com and create an account. Once you're logged in, you can begin creating and saving projects right away.
 
 ## Contributing
 
