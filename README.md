@@ -1,6 +1,6 @@
 # Resin
 
-![Resin Logo](https://user-images.githubusercontent.com/67049621/230255936-32cb7b13-a556-403b-8bbd-bcd357a99268.svg)
+<img src="https://user-images.githubusercontent.com/67049621/230255936-32cb7b13-a556-403b-8bbd-bcd357a99268.svg" width="250">
 
 Resin is a web application built using React that allows users to create and store their own projects in the cloud. Users can register for free and begin creating and saving their own projects.
 
