@@ -8,7 +8,7 @@ We only support the latest version vulnerability reports.
 
 We take the security of our software seriously and appreciate any efforts to help us identify and address vulnerabilities. If you believe you have discovered a security vulnerability in our software, please report it to us as soon as possible.
 
-To report a vulnerability, please send an email to [security@example.com](mailto:security@example.com) with the subject line "Vulnerability Report". In the email, please include the following information:
+To report a vulnerability, please send an email to [resin.app.codespace@gmail.com](mailto:resin.app.codespace@gmail.com) with the subject line "Vulnerability Report". In the email, please include the following information:
 
 - A detailed description of the vulnerability and its potential impact
 - Steps to reproduce the vulnerability
