@@ -1,9 +1,11 @@
 import React, {useState, useEffect, useRef} from 'react';
-import './App.css';
-import {SyntaxHighlightingScheme} from "./Schemes/SyntaxHighlightingScheme";
+import '../App.css';
+import {SyntaxHighlightingScheme} from "../Schemes/SyntaxHighlightingScheme";
 import * as fs from "fs";
+import Navbar from "../Components/Navbar";
+import FileManager from "../Components/FileManager";
 
-function App() {
+function CodeEditor() {
     const [code, setCode] = useState('');
     const preRef = useRef<HTMLPreElement>(null);
     const [selectedCode, setSelectedCode] = useState('');
@@ -41,18 +43,18 @@ function App() {
                         setSelectedCode("");
                     } else {
                         const codeLines = code.split("\n");
-                        if(codeLines[linesCounter - 1].endsWith(`${linesCounter - 1}.`)){
+                        if (codeLines[linesCounter - 1].endsWith(`${linesCounter - 1}.`)) {
                             setLinesCounter(linesCounter => linesCounter - 1);
                             setCode((code) => code.slice(0, -((`${linesCounter.toString()}.`).length + 1)));
-                        }else{
+                        } else {
                             setCode((code) => code.slice(0, -1));
                         }
                     }
                     break;
                 case 'IntlBackslash':
-                    if(event.shiftKey){
+                    if (event.shiftKey) {
                         setCode(code => code + '>');
-                    }else{
+                    } else {
                         setCode(code => code + '<');
                     }
                     break;
@@ -87,7 +89,7 @@ function App() {
         };
     }, [code, selectedCode]);
 
-    const printNewLine = (linesCounter:number) => {
+    const printNewLine = (linesCounter: number) => {
         setLinesCounter(linesCounter => linesCounter + 1);
         const newLine = `${linesCounter}.`;
         setCode(code => code + `\n${newLine}`);
@@ -112,13 +114,22 @@ function App() {
     }, []);
 
     return (
-        <div className="App">
-            <pre ref={preRef} className="code" onSelect={handleSelect}>
-        {code}
-          <span className="cursor bg-black absolute w-1 h-4 mt-0.5 animate-pulse duration-0" />
-      </pre>
-        </div>
+        <>
+            <div className="App max-h-screen">
+                <Navbar/>
+                <div className={"flex"}>
+                    <pre ref={preRef} className="code flex h-auto" onSelect={handleSelect}>
+                        <FileManager/>
+                        <div className={"overflow-y max-h-screen"}>
+                            <span>{code}</span>
+                            <span className="cursor bg-black absolute w-1 h-4 mt-0.5 animate-pulse duration-0"/>
+                        </div>
+                    </pre>
+                </div>
+            </div>
+        </>
+
     );
 }
 
-export default App;
+export default CodeEditor;

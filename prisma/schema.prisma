@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+      id            Int         @id @default(autoincrement())
+      username      String      @unique
+      displayName   String
+      email         String      @unique
+      password      String
+      isBanned      Boolean     @default(false)
+      createdAt     DateTime    @default(now())
+
+      settings      Settings[]
+      files         File[]
+      projects      Project[]
+      owningThemes  Theme[]
+}
+
+//Probably I will add a "Favorites" table later
+
+model Settings {
+      id            Int         @id @default(autoincrement())
+      user          User        @relation(fields: [uid], references: [id])
+      uid           Int
+      theme         Theme       @relation(fields: [themeId], references: [id])
+      themeId       Int         @default(1)
+      autosave      Boolean     @default(false)
+}
+
+model Theme {
+      id             Int       @id @default(autoincrement())
+      themeName      String    @default("Default theme")
+      creator        User      @relation(fields: [creatorId], references: [id])
+      creatorId      Int
+      createdAt      DateTime  @default(now())
+      updatedAt      DateTime  @updatedAt
+
+      settings       Settings[]
+}
+
+model ThemeColors{
+      id            Int         @id @default(autoincrement())
+      Background    String      @default("FFFFFF")
+      CurrentLine   String      @default("000000")
+      Foreground    String      @default("333333")
+      Comment       String      @default("888888")
+      keyword       String      @default("FF6600")
+      comment       String      @default("008000")
+      string        String      @default("800080")
+      number        String      @default("0000FF")
+      operator      String      @default("FF0000")
+}
+
+model File{
+      id            Int         @id @default(autoincrement())
+      fileName      String
+      code          String
+      user          User        @relation(fields: [belongsTo], references: [id])
+      belongsTo     Int
+      project       Project     @relation(fields: [projectId], references: [id])
+      projectId     Int
+      createdAt     DateTime    @default(now())
+}
+
+model Project{
+      id            Int         @id @default(autoincrement())
+      projectName   String
+      user          User        @relation(fields: [idOwner], references: [id])
+      idOwner       Int
+
+      files         File[]
+}
