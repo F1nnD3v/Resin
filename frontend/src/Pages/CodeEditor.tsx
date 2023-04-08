@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import '../App.css';
-import {SyntaxHighlightingScheme} from "../Schemes/SyntaxHighlightingScheme";
+import {SyntaxHighlightingScheme} from "../Schemas/SyntaxHighlightingScheme";
 import * as fs from "fs";
 import Navbar from "../Components/Navbar";
 import FileManager from "../Components/FileManager";
@@ -11,6 +11,7 @@ function CodeEditor() {
     const [selectedCode, setSelectedCode] = useState('');
 
     const [linesCounter, setLinesCounter] = useState<number>(1);
+    const [currentLine, setCurrentLine] = useState<number>(1);
 
     function getSyntaxHighlightingSchemeForExtension(extension: string): SyntaxHighlightingScheme | null {
         // Read the syntax highlighting data from the JSON file
@@ -29,16 +30,26 @@ function CodeEditor() {
     }
 
     useEffect(() => {
+        console.log(currentLine);
+        selectLine(currentLine)
+    }, [currentLine])
+
+    useEffect(() => {
         function handleKeyDown(event: any) {
+            if (event.code == ' ' || event.code == '') return;
+            let textToAdd;
             switch (event.code) {
                 case 'Enter':
-                    printNewLine(linesCounter);
+                    printNewLine();
                     break;
                 case 'Space':
+/*
                     setCode(code => code + ' ');
+*/
                     break;
                 case 'Backspace':
-                    if (selectedCode.length > 0) {
+                    removeLine()
+/*                    if (selectedCode.length > 0) {
                         setCode(code => code.replace(selectedCode, ""))
                         setSelectedCode("");
                     } else {
@@ -49,18 +60,18 @@ function CodeEditor() {
                         } else {
                             setCode((code) => code.slice(0, -1));
                         }
-                    }
+                    }*/
                     break;
                 case 'IntlBackslash':
-                    if (event.shiftKey) {
+/*                    if (event.shiftKey) {
                         setCode(code => code + '>');
                     } else {
                         setCode(code => code + '<');
-                    }
+                    }*/
                     break;
                 case 'Tab':
                     event.preventDefault();
-                    setCode(code => code + "    ");
+                    textToAdd = "   ";
                     break;
                 case 'ControlLeft':
                     break;
@@ -74,7 +85,7 @@ function CodeEditor() {
                         : event.code.toLowerCase().replace("key", "");
                     let codeSplited = code.split(" ");
                     let lastWord = codeSplited[codeSplited.length - 1];
-                    setCode((code) => code + letter);
+                    textToAdd = letter;
             }
             console.log(event.code)
         }
@@ -89,11 +100,24 @@ function CodeEditor() {
         };
     }, [code, selectedCode]);
 
-    const printNewLine = (linesCounter: number) => {
+    const printNewLine = () => {
         setLinesCounter(linesCounter => linesCounter + 1);
-        const newLine = `${linesCounter}.`;
-        setCode(code => code + `\n${newLine}`);
+        setCurrentLine(currentLine => currentLine + 1);
     }
+
+    const removeLine = () => {
+        if(currentLine <= 1 || linesCounter <= 1) return;
+        setLinesCounter(linesCounter => linesCounter - 1);
+        setCurrentLine(currentLine => currentLine - 1);
+    }
+
+    const selectLine = (line:number) => {
+        const currentLineEl = document.querySelector(`[key='${line}']`);
+        if(currentLineEl) {
+            currentLineEl.classList.add('bg-red-400');
+        }
+    }
+
 
     function handleSelect() {
         const selection = window.getSelection();
@@ -104,7 +128,6 @@ function CodeEditor() {
         } else {
             setSelectedCode('');
         }
-        console.log(selectedCode)
     }
 
     useEffect(() => {
@@ -115,14 +138,36 @@ function CodeEditor() {
 
     return (
         <>
-            <div className="App max-h-screen">
+            <div className="App max-h-screen overflow-hidden">
                 <Navbar/>
                 <div className={"flex"}>
                     <pre ref={preRef} className="code flex h-auto" onSelect={handleSelect}>
                         <FileManager/>
-                        <div className={"overflow-y max-h-screen"}>
-                            <span>{code}</span>
-                            <span className="cursor bg-black absolute w-1 h-4 mt-0.5 animate-pulse duration-0"/>
+                        <div id={"lineNumbers"} className={"border-r-2 p-2 pt-0"}>
+                        {Array.from({ length: linesCounter }, (_, i) => (
+                            <div key={i} className={`${i + 1 === currentLine ? "active-line-number" : ""}`}>
+                                {i + 1}.
+                            </div>
+                        ))}
+                        </div>
+                        <div id={"codeLines"} className={"ml-2"}>
+                            <div>
+                                <span>const</span>
+                                <span>funcao</span>
+                                <span>=</span>
+                                <span>()</span>
+                                <span>{"=>"}</span>
+                                <span>{"{"}</span>
+                            </div>
+                            <div>
+                                line 2
+                            </div>
+                            <div>
+                                line 3
+                            </div>
+                            <div>
+                                line 4<span className="cursor bg-black absolute w-1 h-4 mt-0.5 animate-pulse duration-0"/>
+                            </div>
                         </div>
                     </pre>
                 </div>

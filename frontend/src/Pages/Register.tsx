@@ -1,9 +1,9 @@
 import Input from "../Components/Input"
 import {useEffect, useState} from "react";
-import getRandomValueFromArray from "../Functions/GetRandomValueFromArray";
+import getRandomValueFromArray from "../Functions/Utils/GetRandomValueFromArray";
 import {MdAlternateEmail, MdEmail, MdLock, MdLockReset} from "react-icons/md";
 import {BsCheckLg, BsFillPersonFill} from "react-icons/bs";
-import passwordStrength from "../Functions/PasswordStrength";
+import passwordStrength from "../Functions/Utils/PasswordStrength";
 import Button from "../Components/Button";
 import {IoIosArrowForward} from "react-icons/io";
 

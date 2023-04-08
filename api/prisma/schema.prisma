@@ -38,13 +38,13 @@ model Settings {
 
 model Theme {
       id             Int       @id @default(autoincrement())
-      themeName      String    @default("Default theme")
+      themeName      String
       creator        User      @relation(fields: [creatorId], references: [id])
       creatorId      Int
       createdAt      DateTime  @default(now())
-      updatedAt      DateTime  @updatedAt
-
+      updatedAt      DateTime
       settings       Settings[]
+      langs          LanguageTheme[]
 }
 
 model ThemeColors{
@@ -69,6 +69,8 @@ model File{
       project       Project     @relation(fields: [projectId], references: [id])
       projectId     Int
       createdAt     DateTime    @default(now())
+      lang          Language    @relation(fields: [idLang], references: [id])
+      idLang        Int
 }
 
 model Project{
@@ -78,4 +80,30 @@ model Project{
       idOwner       Int
 
       files         File[]
+}
+
+model Language{
+      id            Int         @id @default(autoincrement())
+      languageName  String
+
+      langExtens    LanguageExtension[]
+      langThemes    LanguageTheme[]
+      files         File[]
+}
+
+model LanguageExtension{
+      id            Int         @id @default(autoincrement())
+      Extension     String
+
+      lang          Language    @relation(fields: [idLanguage], references: [id])
+      idLanguage    Int
+}
+
+model LanguageTheme{
+      id            Int         @id @default(autoincrement())
+
+      language      Language    @relation(fields: [idLanguage], references: [id])
+      idLanguage    Int
+      theme         Theme       @relation(fields: [idTheme], references: [id])
+      idTheme       Int
 }

@@ -5,9 +5,9 @@ import './index.css';
 import './App.css';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Index from './Pages/Index';
 import CodeEditor from "./Pages/CodeEditor";
 import Register from "./Pages/Register";
+import Index from "./Pages/Index";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

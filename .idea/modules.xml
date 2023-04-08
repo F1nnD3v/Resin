@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/radiotexteditor.iml" filepath="$PROJECT_DIR$/.idea/radiotexteditor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Resin.iml" filepath="$PROJECT_DIR$/.idea/Resin.iml" />
     </modules>
   </component>
 </project>
