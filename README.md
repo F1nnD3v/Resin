@@ -1,4 +1,5 @@
-[![Sponsored by GitAds](https://gitads.dev/v1/ad-serve?source=F1nnD3v/repository@github)](https://gitads.dev/v1/ad-track?source=F1nnD3v/repository@github)
+## GitAds Sponsored
+[![Sponsored by GitAds](https://gitads.dev/v1/ad-serve?source=f1nnd3v/resin@github)](https://gitads.dev/v1/ad-track?source=f1nnd3v/resin@github)
 
 # Resin
 <!-- GitAds-Verify: 8DT51TUN1P7BAX1LSGPSOHH4ZBNEQGWU -->
